@@ -1,37 +1,29 @@
 import * as THREE from 'three';
 
 export function createProduct(scene) {
-  const material = new THREE.MeshStandardMaterial({ color: 0x8b4513 });
+  const bodyMaterial = new THREE.MeshStandardMaterial({ color: 0xff4444 });
+  const topMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
 
-  // Chair seat
-  const seat = new THREE.Mesh(new THREE.BoxGeometry(2, 0.2, 2), material);
-  seat.name = "Seat";
-  scene.add(seat);
+  // Rocket body
+  const body = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 3, 32), bodyMaterial);
+  scene.add(body);
 
-  // Chair back
-  const back = new THREE.Mesh(new THREE.BoxGeometry(2, 2, 0.2), material);
-  back.position.y = 1;
-  back.position.z = -0.9;
-  back.name = "Back";
-  scene.add(back);
+  // Rocket cone
+  const cone = new THREE.Mesh(new THREE.ConeGeometry(0.5, 1, 32), topMaterial);
+  cone.position.y = 2;
+  scene.add(cone);
 
-  // Chair legs
-  const legGeometry = new THREE.CylinderGeometry(0.1, 0.1, 2);
-  const positions = [
-    [-0.9, -1, -0.9],
-    [0.9, -1, -0.9],
-    [-0.9, -1, 0.9],
-    [0.9, -1, 0.9],
-  ];
-
-  for (let i = 0; i < 4; i++) {
-    const leg = new THREE.Mesh(legGeometry, material);
-    leg.position.set(...positions[i]);
-    leg.name = `Leg ${i + 1}`;
-    scene.add(leg);
+  // Fins
+  const finMaterial = new THREE.MeshStandardMaterial({ color: 0x222222 });
+  for (let i = 0; i < 3; i++) {
+    const fin = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.5, 1), finMaterial);
+    fin.position.set(Math.sin(i * 2 * Math.PI / 3) * 0.6, -1, Math.cos(i * 2 * Math.PI / 3) * 0.6);
+    fin.rotation.y = i * 2 * Math.PI / 3;
+    scene.add(fin);
   }
 
-  // Return the seat so we can animate it in main.js
-  return { seat };
-}
+  body.name = "Rocket Body";
+  cone.name = "Nose Cone";
 
+  return { seat: body }; 
+}
