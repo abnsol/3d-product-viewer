@@ -17,8 +17,6 @@ export function createProduct(scene) {
 
   // Chair legs
   const legGeometry = new THREE.CylinderGeometry(0.1, 0.1, 2);
-  const legs = [];
-
   const positions = [
     [-0.9, -1, -0.9],
     [0.9, -1, -0.9],
@@ -30,7 +28,10 @@ export function createProduct(scene) {
     const leg = new THREE.Mesh(legGeometry, material);
     leg.position.set(...positions[i]);
     leg.name = `Leg ${i + 1}`;
-    legs.push(leg);
     scene.add(leg);
   }
+
+  // Return the seat so we can animate it in main.js
+  return { seat };
 }
+
