@@ -6,9 +6,9 @@ import { autoRotateCamera } from './cameraAnimation.js';
 
 const { scene, camera, renderer, controls } = initScene();
 
-const { seat } = createProduct(scene);       // <-- Step 6
-addLighting(scene);                          // <-- Step 7
-setupInteraction(renderer, scene, camera);   // <-- Step 8
+const { seat } = createProduct(scene);       
+addLighting(scene);                          
+setupInteraction(renderer, scene, camera);   
 
 let start = Date.now();
 
@@ -17,9 +17,9 @@ function animate() {
 
   const elapsed = Date.now() - start;
 
-  autoRotateCamera(camera, elapsed);         // <-- Step 9
+  autoRotateCamera(camera, elapsed);         
 
-  // Step 10: Seat pulsing animation
+  
   seat.scale.y = 1 + 0.05 * Math.sin(elapsed * 0.005);
 
   controls.update();
